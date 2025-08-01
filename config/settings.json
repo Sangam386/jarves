@@ -1,0 +1,263 @@
+{
+  "app": {
+    "name": "JARVIS AI Assistant",
+    "version": "1.0.0",
+    "description": "Advanced AI Assistant with Voice and File Processing",
+    "author": "JARVIS Team",
+    "theme": "dark",
+    "language": "en",
+    "auto_update": true,
+    "telemetry": false
+  },
+  "ui": {
+    "orb": {
+      "color": "#00d4ff",
+      "secondary_color": "#0099cc",
+      "pulse": true,
+      "pulse_speed": 1.5,
+      "size": "large",
+      "glow_intensity": 0.8,
+      "animation_style": "smooth"
+    },
+    "theme": {
+      "dark": {
+        "primary": "#1a1a1a",
+        "secondary": "#2d2d2d",
+        "accent": "#00d4ff",
+        "text_primary": "#ffffff",
+        "text_secondary": "#cccccc",
+        "background": "#000000",
+        "surface": "#1a1a1a",
+        "error": "#ff6b6b",
+        "warning": "#ffa726",
+        "success": "#4caf50"
+      },
+      "light": {
+        "primary": "#ffffff",
+        "secondary": "#f5f5f5",
+        "accent": "#2196f3",
+        "text_primary": "#212121",
+        "text_secondary": "#757575",
+        "background": "#fafafa",
+        "surface": "#ffffff",
+        "error": "#f44336",
+        "warning": "#ff9800",
+        "success": "#4caf50"
+      }
+    },
+    "layout": {
+      "sidebar_width": 280,
+      "chat_max_width": 800,
+      "message_bubble_radius": 12,
+      "animation_duration": 0.3,
+      "scroll_behavior": "smooth"
+    },
+    "typography": {
+      "font_family": "'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      "font_size_base": 14,
+      "font_size_large": 16,
+      "font_size_small": 12,
+      "line_height": 1.5
+    }
+  },
+  "behavior": {
+    "ai": {
+      "default_model": "llama3.2",
+      "fallback_model": "llama3.2:1b",
+      "temperature": 0.7,
+      "max_tokens": 2048,
+      "context_length": 4096,
+      "streaming": true,
+      "auto_model_selection": true,
+      "model_switching_delay": 1000
+    },
+    "conversation": {
+      "auto_save": true,
+      "save_interval": 30000,
+      "max_history": 100,
+      "context_retention": true,
+      "smart_summarization": true,
+      "conversation_timeout": 3600000
+    },
+    "performance": {
+      "lazy_loading": true,
+      "virtual_scrolling": true,
+      "debounce_delay": 300,
+      "cache_responses": true,
+      "preload_models": false,
+      "max_concurrent_requests": 3
+    }
+  },
+  "features": {
+    "voice": {
+      "enabled": true,
+      "wake_word": "hey jarvis",
+      "wake_word_sensitivity": 0.7,
+      "speech_to_text": {
+        "provider": "browser",
+        "language": "en-US",
+        "continuous": true,
+        "interim_results": true,
+        "noise_suppression": true
+      },
+      "text_to_speech": {
+        "enabled": true,
+        "voice": "default",
+        "rate": 1.0,
+        "pitch": 1.0,
+        "volume": 0.8,
+        "auto_speak": false
+      },
+      "audio_visualization": {
+        "enabled": true,
+        "style": "waveform",
+        "sensitivity": 0.8,
+        "color": "#00d4ff"
+      }
+    },
+    "file_processing": {
+      "enabled": true,
+      "max_file_size": 104857600,
+      "allowed_types": [
+        "text/plain",
+        "application/pdf",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "application/json",
+        "text/csv",
+        "text/markdown",
+        "application/zip"
+      ],
+      "auto_analyze": true,
+      "extract_text": true,
+      "generate_summaries": true,
+      "ocr_enabled": true
+    },
+    "integrations": {
+      "ollama": {
+        "enabled": true,
+        "host": "http://localhost:11434",
+        "timeout": 300000,
+        "auto_pull_models": false,
+        "health_check_interval": 60000
+      },
+      "clipboard": {
+        "enabled": true,
+        "auto_copy_responses": false,
+        "format_code_blocks": true
+      },
+      "notifications": {
+        "enabled": true,
+        "desktop": true,
+        "sound": false,
+        "badge": true
+      }
+    }
+  },
+  "security": {
+    "cors": {
+      "enabled": true,
+      "origins": ["http://localhost:3000", "http://127.0.0.1:3000"],
+      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      "headers": ["Content-Type", "Authorization"]
+    },
+    "rate_limiting": {
+      "enabled": true,
+      "requests_per_minute": 60,
+      "burst_limit": 10
+    },
+    "file_validation": {
+      "scan_uploads": true,
+      "max_scan_size": 50000000,
+      "quarantine_suspicious": true
+    },
+    "api_keys": {
+      "encryption": true,
+      "storage": "secure",
+      "rotation_interval": 2592000000
+    }
+  },
+  "logging": {
+    "level": "info",
+    "file_logging": true,
+    "console_logging": true,
+    "max_log_size": 10485760,
+    "log_rotation": true,
+    "retention_days": 30,
+    "categories": {
+      "api": true,
+      "ai_requests": true,
+      "file_processing": true,
+      "voice": false,
+      "ui_interactions": false,
+      "performance": true,
+      "errors": true
+    }
+  },
+  "storage": {
+    "conversation_history": {
+      "enabled": true,
+      "max_conversations": 1000,
+      "compression": true,
+      "encryption": false
+    },
+    "file_cache": {
+      "enabled": true,
+      "max_size": 1073741824,
+      "ttl": 604800000,
+      "cleanup_interval": 86400000
+    },
+    "model_cache": {
+      "enabled": true,
+      "preload_favorites": true,
+      "cache_responses": true,
+      "max_cached_responses": 500
+    }
+  },
+  "advanced": {
+    "experimental_features": {
+      "enabled": false,
+      "beta_models": false,
+      "advanced_voice": false,
+      "multi_modal": true,
+      "code_execution": false
+    },
+    "developer_mode": {
+      "enabled": false,
+      "debug_ui": false,
+      "api_inspector": false,
+      "performance_monitor": false
+    },
+    "customization": {
+      "custom_css": false,
+      "plugins": false,
+      "external_models": true,
+      "custom_prompts": true
+    }
+  },
+  "defaults": {
+    "conversation_starters": [
+      "Hello! How can I assist you today?",
+      "What would you like to know or discuss?",
+      "I'm here to help with any questions or tasks you have.",
+      "Ready to chat, analyze files, or help with coding!"
+    ],
+    "system_prompts": {
+      "general": "You are JARVIS, an advanced AI assistant. Be helpful, accurate, and friendly.",
+      "coding": "You are a coding expert. Provide clean, well-commented code with explanations.",
+      "analysis": "You are an analytical expert. Provide thorough, structured analysis with insights.",
+      "creative": "You are a creative assistant. Be imaginative while maintaining helpfulness."
+    },
+    "error_messages": {
+      "model_unavailable": "The selected model is currently unavailable. Switching to fallback model.",
+      "network_error": "Network connection issue. Please check your connection and try again.",
+      "file_too_large": "File size exceeds the maximum limit. Please use a smaller file.",
+      "unsupported_format": "This file format is not supported. Please use a supported format."
+    }
+  }
+}

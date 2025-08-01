@@ -1,0 +1,197 @@
+{
+  "ollama_models": {
+    "recommended": [
+      {
+        "name": "llama3.2",
+        "description": "Fast and efficient model for general tasks",
+        "size": "3.2B",
+        "parameters": "3.2B",
+        "use_case": ["general", "coding", "conversation"],
+        "memory_required": "4GB",
+        "speed": "fast",
+        "quality": "good"
+      },
+      {
+        "name": "llama3.2:1b",
+        "description": "Ultra-fast lightweight model",
+        "size": "1.3B",
+        "parameters": "1B",
+        "use_case": ["quick_responses", "basic_tasks"],
+        "memory_required": "2GB",
+        "speed": "very_fast",
+        "quality": "basic"
+      },
+      {
+        "name": "codellama",
+        "description": "Specialized for coding tasks and programming",
+        "size": "7B",
+        "parameters": "7B",
+        "use_case": ["coding", "programming", "debugging", "code_review"],
+        "memory_required": "8GB",
+        "speed": "medium",
+        "quality": "excellent"
+      },
+      {
+        "name": "llama3.1:8b",
+        "description": "Balanced model for complex reasoning",
+        "size": "8B",
+        "parameters": "8B",
+        "use_case": ["reasoning", "analysis", "creative_writing"],
+        "memory_required": "8GB",
+        "speed": "medium",
+        "quality": "very_good"
+      },
+      {
+        "name": "phi3",
+        "description": "Microsoft's efficient small model",
+        "size": "3.8B",
+        "parameters": "3.8B",
+        "use_case": ["general", "educational", "reasoning"],
+        "memory_required": "4GB",
+        "speed": "fast",
+        "quality": "good"
+      },
+      {
+        "name": "gemma2:2b",
+        "description": "Google's lightweight model",
+        "size": "2B",
+        "parameters": "2B",
+        "use_case": ["general", "quick_tasks"],
+        "memory_required": "3GB",
+        "speed": "very_fast",
+        "quality": "good"
+      }
+    ],
+    "specialized": [
+      {
+        "name": "llava",
+        "description": "Vision-language model for image analysis",
+        "size": "7B",
+        "parameters": "7B",
+        "use_case": ["image_analysis", "visual_qa", "ocr"],
+        "memory_required": "8GB",
+        "speed": "slow",
+        "quality": "excellent",
+        "capabilities": ["vision", "text"]
+      },
+      {
+        "name": "deepseek-coder",
+        "description": "Advanced coding assistant",
+        "size": "6.7B",
+        "parameters": "6.7B",
+        "use_case": ["complex_coding", "software_architecture", "code_generation"],
+        "memory_required": "8GB",
+        "speed": "medium",
+        "quality": "excellent"
+      },
+      {
+        "name": "wizardcoder",
+        "description": "Code generation and explanation specialist",
+        "size": "15B",
+        "parameters": "15B",
+        "use_case": ["code_generation", "code_explanation", "refactoring"],
+        "memory_required": "16GB",
+        "speed": "slow",
+        "quality": "excellent"
+      }
+    ]
+  },
+  "online_models": {
+    "claude": [
+      {
+        "name": "claude-3-sonnet",
+        "description": "Anthropic's balanced model",
+        "provider": "anthropic",
+        "use_case": ["general", "analysis", "creative_writing"],
+        "cost": "medium",
+        "speed": "fast",
+        "quality": "excellent"
+      },
+      {
+        "name": "claude-3-haiku",
+        "description": "Anthropic's fast model",
+        "provider": "anthropic",
+        "use_case": ["quick_responses", "basic_tasks"],
+        "cost": "low",
+        "speed": "very_fast",
+        "quality": "good"
+      }
+    ],
+    "openai": [
+      {
+        "name": "gpt-4-turbo",
+        "description": "OpenAI's advanced model",
+        "provider": "openai",
+        "use_case": ["complex_reasoning", "coding", "analysis"],
+        "cost": "high",
+        "speed": "medium",
+        "quality": "excellent"
+      },
+      {
+        "name": "gpt-3.5-turbo",
+        "description": "OpenAI's efficient model",
+        "provider": "openai",
+        "use_case": ["general", "conversation", "basic_coding"],
+        "cost": "low",
+        "speed": "fast",
+        "quality": "good"
+      }
+    ],
+    "deepseek": [
+      {
+        "name": "deepseek-chat",
+        "description": "DeepSeek's conversational model",
+        "provider": "deepseek",
+        "use_case": ["conversation", "general", "reasoning"],
+        "cost": "very_low",
+        "speed": "fast",
+        "quality": "good"
+      },
+      {
+        "name": "deepseek-coder",
+        "description": "DeepSeek's coding specialist",
+        "provider": "deepseek",
+        "use_case": ["coding", "programming", "debugging"],
+        "cost": "very_low",
+        "speed": "fast",
+        "quality": "very_good"
+      }
+    ]
+  },
+  "model_categories": {
+    "general_purpose": ["llama3.2", "llama3.1:8b", "phi3", "gemma2:2b"],
+    "coding": ["codellama", "deepseek-coder", "wizardcoder"],
+    "fast_response": ["llama3.2:1b", "gemma2:2b", "gpt-3.5-turbo", "claude-3-haiku"],
+    "high_quality": ["llama3.1:8b", "gpt-4-turbo", "claude-3-sonnet"],
+    "vision": ["llava"],
+    "budget_friendly": ["deepseek-chat", "deepseek-coder"]
+  },
+  "model_selection_logic": {
+    "default": "llama3.2",
+    "fallback": "llama3.2:1b",
+    "rules": {
+      "coding_task": "codellama",
+      "image_analysis": "llava",
+      "quick_response": "llama3.2:1b",
+      "complex_reasoning": "llama3.1:8b",
+      "budget_mode": "deepseek-chat"
+    }
+  },
+  "system_requirements": {
+    "minimum": {
+      "ram": "4GB",
+      "cpu": "2 cores",
+      "disk": "10GB"
+    },
+    "recommended": {
+      "ram": "8GB",
+      "cpu": "4 cores",
+      "disk": "20GB"
+    },
+    "optimal": {
+      "ram": "16GB",
+      "cpu": "8 cores",
+      "disk": "50GB"
+    }
+  }
+}

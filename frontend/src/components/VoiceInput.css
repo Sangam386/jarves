@@ -1,0 +1,519 @@
+.voice-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+/* Voice Controls */
+.voice-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.voice-btn {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.voice-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  border-color: rgba(0, 212, 255, 0.6);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2);
+}
+
+.voice-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.voice-btn.listening {
+  background: linear-gradient(135deg, #00d4ff, #0ea5e9);
+  border-color: #00d4ff;
+  animation: voicePulse 1.5s ease-in-out infinite;
+}
+
+.voice-btn.recording {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-color: #ef4444;
+  animation: recordPulse 1s ease-in-out infinite;
+}
+
+.voice-icon {
+  font-size: 2rem;
+  z-index: 2;
+  position: relative;
+}
+
+/* Audio Visualizer */
+.audio-visualizer {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 20px;
+  z-index: 1;
+}
+
+.audio-bar {
+  width: 3px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 1.5px;
+  transition: height 0.1s ease;
+  animation: audioBarBounce 0.8s ease-in-out infinite;
+}
+
+/* Status Ring */
+.status-ring {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.status-ring.active {
+  border-color: rgba(0, 212, 255, 0.5);
+  animation: ringRotate 2s linear infinite;
+}
+
+.ring-inner {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 50%;
+}
+
+/* Record Button */
+.record-btn {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #374151, #1f2937);
+  border: 2px solid rgba(107, 114, 128, 0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.record-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
+.record-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.record-btn.recording {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-color: #ef4444;
+  animation: recordBlink 1s ease-in-out infinite;
+}
+
+.record-icon {
+  font-size: 1.5rem;
+}
+
+/* Voice Status */
+.voice-status {
+  min-height: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.status-message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  animation: statusSlideIn 0.3s ease-out;
+}
+
+.status-message.listening {
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  color: #00d4ff;
+}
+
+.status-message.recording {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.status-icon {
+  font-size: 1.5rem;
+  animation: statusIconBounce 1.5s ease-in-out infinite;
+}
+
+.status-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.status-title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.status-subtitle {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* Transcript Display */
+.transcript-display {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 8px;
+  animation: transcriptFadeIn 0.3s ease-out;
+}
+
+.transcript-label {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.transcript-text {
+  color: #e2e8f0;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Error Display */
+.error-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  color: #ef4444;
+  animation: errorShake 0.5s ease-out;
+}
+
+.error-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-icon {
+  font-size: 1.2rem;
+}
+
+.error-message {
+  font-size: 0.9rem;
+}
+
+.error-dismiss {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.error-dismiss:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+/* Voice Input Error (Not Supported) */
+.voice-input-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(107, 114, 128, 0.1);
+  border: 1px solid rgba(107, 114, 128, 0.3);
+  border-radius: 8px;
+  color: #9ca3af;
+}
+
+.voice-input-error .error-icon {
+  font-size: 1.5rem;
+}
+
+.voice-input-error .error-text {
+  font-size: 0.9rem;
+}
+
+/* Voice Help */
+.voice-help {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.help-details {
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 8px;
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.help-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 500;
+  user-select: none;
+}
+
+.help-summary:hover {
+  color: #00d4ff;
+}
+
+.help-icon {
+  font-size: 1rem;
+}
+
+.help-content {
+  padding: 0 0.75rem 0.75rem;
+  border-top: 1px solid rgba(71, 85, 105, 0.2);
+  animation: helpExpand 0.3s ease-out;
+}
+
+.help-section {
+  margin-bottom: 1rem;
+}
+
+.help-section:last-child {
+  margin-bottom: 0;
+}
+
+.help-section h4 {
+  color: #00d4ff;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.help-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.help-section li {
+  padding: 0.25rem 0;
+  color: #cbd5e1;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.help-section li::before {
+  content: '•';
+  color: #64748b;
+  position: absolute;
+  left: 0;
+}
+
+/* Animations */
+@keyframes voicePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(0, 212, 255, 0);
+  }
+}
+
+@keyframes recordPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(239, 68, 68, 0);
+  }
+}
+
+@keyframes recordBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes audioBarBounce {
+  0%, 100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes ringRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes statusSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes statusIconBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes transcriptFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes errorShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes helpExpand {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 300px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .voice-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .voice-btn {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .record-btn {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .voice-icon {
+    font-size: 1.8rem;
+  }
+  
+  .record-icon {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .voice-input-container {
+    padding: 0.75rem;
+  }
+  
+  .voice-btn {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .record-btn {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .voice-icon {
+    font-size: 1.5rem;
+  }
+  
+  .record-icon {
+    font-size: 1.1rem;
+  }
+  
+  .status-message {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .help-content {
+    font-size: 0.8rem;
+  }
+}

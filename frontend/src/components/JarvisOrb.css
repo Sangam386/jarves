@@ -1,0 +1,451 @@
+.jarvis-orb-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+  perspective: 1000px;
+}
+
+.jarvis-orb {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  user-select: none;
+  transform-style: preserve-3d;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --orb-color: #00d4ff;
+  --orb-scale: 1;
+  --animation-speed: 2s;
+}
+
+.jarvis-orb:hover {
+  transform: scale(1.05) rotateY(10deg);
+}
+
+.jarvis-orb.clicked {
+  transform: scale(0.95) rotateY(15deg);
+}
+
+.jarvis-orb.active {
+  animation: orbPulse var(--animation-speed) ease-in-out infinite;
+}
+
+.jarvis-orb.processing {
+  animation: orbProcessing 1s linear infinite;
+}
+
+/* Canvas for dynamic effects */
+.orb-canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Static orb layers */
+.orb-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.orb-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(circle at 30% 30%, 
+    rgba(255, 255, 255, 0.8) 0%,
+    var(--orb-color) 70%,
+    transparent 100%);
+  border-radius: 50%;
+  animation: orbInnerGlow var(--animation-speed) ease-in-out infinite alternate;
+}
+
+.orb-middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(circle at center,
+    var(--orb-color) 0%,
+    rgba(0, 212, 255, 0.6) 50%,
+    transparent 70%);
+  border-radius: 50%;
+  animation: orbMiddleRotate calc(var(--animation-speed) * 1.5) linear infinite;
+}
+
+.orb-outer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center,
+    transparent 60%,
+    var(--orb-color) 70%,
+    transparent 100%);
+  border-radius: 50%;
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  animation: orbOuterPulse calc(var(--animation-speed) * 0.8) ease-in-out infinite;
+}
+
+/* Pulse rings */
+.pulse-rings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--orb-color);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.ring-1 {
+  width: 120%;
+  height: 120%;
+  animation: pulseRing 3s ease-out infinite;
+}
+
+.ring-2 {
+  width: 140%;
+  height: 140%;
+  animation: pulseRing 3s ease-out infinite 1s;
+}
+
+.ring-3 {
+  width: 160%;
+  height: 160%;
+  animation: pulseRing 3s ease-out infinite 2s;
+}
+
+.jarvis-orb.active .pulse-ring {
+  animation-play-state: running;
+}
+
+.jarvis-orb:not(.active) .pulse-ring {
+  animation-play-state: paused;
+}
+
+/* Status indicators */
+.status-indicators {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.system-status {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  margin: 8px;
+}
+
+.system-status .status-dot {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: statusBlink 2s ease-in-out infinite;
+}
+
+.system-status.online .status-dot {
+  background: #00ff88;
+  box-shadow: 0 0 10px #00ff88;
+}
+
+.system-status.offline .status-dot {
+  background: #ff4444;
+  box-shadow: 0 0 10px #ff4444;
+}
+
+.processing-indicator {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.processing-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.processing-dots .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orb-color);
+  animation: processingDot 1.4s ease-in-out infinite both;
+}
+
+.processing-dots .dot:nth-child(1) { animation-delay: -0.32s; }
+.processing-dots .dot:nth-child(2) { animation-delay: -0.16s; }
+.processing-dots .dot:nth-child(3) { animation-delay: 0s; }
+
+/* Energy field */
+.energy-field {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180%;
+  height: 180%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.energy-particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: var(--orb-color);
+  border-radius: 50%;
+  transform-origin: 0 0;
+  animation: energyParticle calc(var(--animation-speed) * 2) linear infinite;
+  animation-delay: var(--delay);
+  opacity: 0.6;
+}
+
+.jarvis-orb.active .energy-particle {
+  animation-play-state: running;
+}
+
+.jarvis-orb:not(.active) .energy-particle {
+  animation-play-state: paused;
+}
+
+/* Interaction feedback */
+.interaction-feedback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.click-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--orb-color) 0%, transparent 70%);
+  opacity: 0;
+  transform-origin: center;
+}
+
+.jarvis-orb.clicked .click-ripple {
+  animation: clickRipple 0.6s ease-out;
+}
+
+.hover-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  border-radius: 50%;
+  background: radial-gradient(circle, transparent 50%, var(--orb-color) 70%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.jarvis-orb.hovered .hover-glow {
+  opacity: 0.3;
+}
+
+/* Orb label */
+.orb-label {
+  margin-top: 2rem;
+  text-align: center;
+  z-index: 10;
+}
+
+.label-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--orb-color);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.label-subtitle {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  color: #ccc;
+}
+
+.status-online {
+  color: #00ff88;
+}
+
+.status-offline {
+  color: #ff6b6b;
+}
+
+/* Animations */
+@keyframes orbPulse {
+  0%, 100% { 
+    transform: scale(var(--orb-scale)) rotateY(0deg);
+    filter: brightness(1);
+  }
+  50% { 
+    transform: scale(calc(var(--orb-scale) * 1.05)) rotateY(180deg);
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes orbProcessing {
+  0% { transform: rotateZ(0deg); }
+  100% { transform: rotateZ(360deg); }
+}
+
+@keyframes orbInnerGlow {
+  0% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+@keyframes orbMiddleRotate {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes orbOuterPulse {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes processingDot {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes energyParticle {
+  0% {
+    transform: translate(-50%, -50%) rotate(var(--rotation)) translateX(90px) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--rotation)) translateX(90px) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(calc(var(--rotation) + 360deg)) translateX(90px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(calc(var(--rotation) + 360deg)) translateX(90px) scale(0);
+  }
+}
+
+@keyframes clickRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .jarvis-orb {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .orb-canvas {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .label-text {
+    font-size: 1rem;
+  }
+  
+  .label-subtitle {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .jarvis-orb {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .orb-canvas {
+    width: 240px;
+    height: 240px;
+  }
+}
